@@ -210,15 +210,11 @@ tail -n 5 "$DAM/logs/fecha.log"
 ```bash
 tail -n 5 "$DAM/logs/fecha.log"
 2025-09-23T18:30:45+01:00 :: hello from user timer
-2025-09-23T18:31:45+01:00 :: hello from user timer
-2025-09-23T18:32:45+01:00 :: hello from user timer
-2025-09-23T18:33:45+01:00 :: hello from user timer
-2025-09-23T18:34:45+01:00 :: hello from user timer
+
 ```
 
 **Reflexiona la salida:**
-El timer esta creando una entrada nueva en los logs cada minuto
----
+El timer esta creando una entrada nueva en los logs cada minuto, pero al no estar habilitado solo creo 1.
 
 **15.** Diferencia **enable** vs **start** (modo usuario). Habilita el **timer**.
 

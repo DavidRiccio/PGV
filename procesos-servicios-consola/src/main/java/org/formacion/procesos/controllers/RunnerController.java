@@ -2,10 +2,22 @@ package org.formacion.procesos.controllers;
 
 import java.util.Scanner;
 
+import org.formacion.procesos.services.ComandoServiceLs;
+import org.formacion.procesos.services.ComandoServicePs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RunnerController {
+
+    @Autowired
+    ComandoServiceLs comandoControllerLs;
+
+
+    @Autowired
+    ComandoServicePs comandoControllerPs;
+
+
 
     public void menuConsola() {
         Scanner scanner = new Scanner(System.in);
@@ -16,6 +28,12 @@ public class RunnerController {
                 "  run HASH_SHA256 file=README.md\n" +
                 "  help | os | exit\n");
           String comando = scanner.nextLine();      
+          if (comando.toUpperCase().startsWith("PS")){
+            comandoControllerPs.procesarLinea(comando);
+          }else{
+            comandoControllerLs.procesarLinea(comando);
+          }
+
     }
 
     private void helpConsola() {

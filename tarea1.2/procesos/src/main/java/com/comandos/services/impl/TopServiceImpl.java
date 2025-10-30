@@ -9,6 +9,6 @@ public class TopServiceImpl extends ComandoServiceAbstract{
     
     public TopServiceImpl(){
         this.setTipo(Job.TOP);
-        this.setValidation("-b");
+        this.setValidation("");
     }
 }

@@ -60,9 +60,9 @@ public abstract class ComandoServiceAbstract {
     public void procesarLinea(String linea) {
         String[] arrayComando = linea.split("\s+");
         this.setComando(arrayComando[0]);
-        System.out.println("Comando: " + this.getComando());
+        System.out.println("[INF] Comando: " + this.getComando());
         if (!validar(arrayComando)) {
-            System.out.println("Comando invalido");
+            System.out.println("[ERR] Comando invalido");
             return;
         }
 
@@ -81,7 +81,7 @@ public abstract class ComandoServiceAbstract {
         try {
             proceso.waitFor();
         } catch (Exception e) {
-            e.printStackTrace();
+           e.printStackTrace();
         }
         return true;
     }
@@ -108,7 +108,7 @@ public abstract class ComandoServiceAbstract {
 
     public boolean validarComando() {
         if (!this.getComando().toUpperCase().equals(getTipoToString())) {
-            System.out.println("Comando invalido");
+            System.out.println("[ERR] Comando invalido");
             return false;
         }
         return true;

@@ -10,6 +10,6 @@ public class LsofServiceImpl extends ComandoServiceAbstract{
     
     public LsofServiceImpl(){
         this.setTipo(Job.LSOF);
-        this.setValidation("-i");
+        this.setValidation("^(-i|\s*)$");
     }
 }

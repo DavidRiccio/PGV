@@ -1,10 +1,13 @@
-USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root           1  0.0  0.0  21476 12016 ?        Ss   10:26   0:00 /sbin/init
-root           2  0.0  0.0   3072  1664 ?        Sl   10:26   0:00 /init
-root           8  0.0  0.0   3104  2044 ?        Sl   10:26   0:00 plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate
-root          55  0.0  0.0  66820 15240 ?        S<s  10:26   0:00 /usr/lib/systemd/systemd-journald
-root         102  0.0  0.0  24988  6016 ?        Ss   10:26   0:00 /usr/lib/systemd/systemd-udevd
-systemd+     165  0.0  0.0  21456 12544 ?        Ss   10:26   0:00 /usr/lib/systemd/systemd-resolved
-systemd+     172  0.0  0.0  91024  7424 ?        Ssl  10:26   0:00 /usr/lib/systemd/systemd-timesyncd
-root         184  0.0  0.0   4236  2432 ?        Ss   10:26   0:00 /usr/sbin/cron -f -P
-message+     185  0.0  0.0   9628  4864 ?        Ss   10:26   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+node    5248 david   22u  IPv4  30721      0t0  TCP localhost:33849 (LISTEN)
+node    5248 david   25u  IPv4  30723      0t0  TCP localhost:33849->localhost:36260 (ESTABLISHED)
+node    5261 david   22u  IPv4  28962      0t0  TCP localhost:36260->localhost:33849 (ESTABLISHED)
+node    5283 david   22u  IPv4  23381      0t0  TCP localhost:36274->localhost:33849 (ESTABLISHED)
+node    5486 david   22u  IPv4  30732      0t0  TCP localhost:33849->localhost:36274 (ESTABLISHED)
+node    5486 david   67u  IPv4  71170      0t0  TCP localhost:3000 (LISTEN)
+node    5486 david   77u  IPv4  29127      0t0  TCP localhost:57770->localhost:33881 (ESTABLISHED)
+node    5486 david   79u  IPv4  71171      0t0  TCP localhost:3001 (LISTEN)
+node    5486 david   81u  IPv4 393002      0t0  TCP 172.22.86.37:37394->20.199.39.224:https (ESTABLISHED)
+node    5486 david   99u  IPv4 401594      0t0  TCP 172.22.86.37:36180->lb-140-82-112-22-iad.github.com:https (ESTABLISHED)
+node    6157 david   31u  IPv4  27146      0t0  TCP localhost:33881 (LISTEN)
+node    6157 david   32u  IPv4  27149      0t0  TCP localhost:33881->localhost:57770 (ESTABLISHED)

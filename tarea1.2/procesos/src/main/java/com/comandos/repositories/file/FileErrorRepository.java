@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class FileErrorRepository {
-    
-    private static Path path;
-    private static Logger logger = LoggerFactory.getLogger(FileErrorRepository.class);
-    
+
+    public static Path path;
+    public static Logger logger = LoggerFactory.getLogger(FileErrorRepository.class);
+
     public FileErrorRepository() {
         path = Paths.get("stderr.txt");
     }
-    
+
     public boolean addError(String mensaje) {
         try {
             String error = "[ERR] " + mensaje + "\n";
-            Files.write(path, error.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.write(path, error.getBytes(), StandardOpenOption.APPEND);
             return true;
         } catch (IOException e) {
             logger.error("Error al escribir en stderr", e);

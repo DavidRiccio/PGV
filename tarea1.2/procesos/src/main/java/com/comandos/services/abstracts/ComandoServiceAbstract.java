@@ -16,7 +16,7 @@ public abstract class ComandoServiceAbstract {
     private String validation;
     protected List<String> parametrosValidos;
     @Autowired
-    FileErrorRepository errorRepository;
+    public FileErrorRepository errorRepository;
 
     public ComandoServiceAbstract(String... parametrosValidos) {
         this.parametrosValidos = Arrays.asList(parametrosValidos);
@@ -104,13 +104,14 @@ public abstract class ComandoServiceAbstract {
 
     public boolean validar(String[] arrayComando) {
         if (!validarComando()) {
-            errorRepository.addError("Comando invalido"+this.getComando() + Arrays.toString(arrayComando));
+            errorRepository.addError("Comando invalido: " + this.getComando() + Arrays.toString(arrayComando));
             return false;
         }
         String parametro = arrayComando[1];
         Pattern pattern = Pattern.compile(validation);
         Matcher matcher = pattern.matcher(parametro);
         if (!matcher.find()) {
+            errorRepository.addError("Comando invalido: " + this.getComando() + Arrays.toString(arrayComando));
             return false;
         }
         return true;

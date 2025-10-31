@@ -1,8 +1,11 @@
-[ERR] Comando invalido
-[ERR] Comando invalido
-[ERR] Comando invalido
-[ERR] Comando invalido
-[ERR] Comando invalidops
-[ERR] Comando invalidops
-[ERR] Comando invalidops
-[ERR] Comando invalidops[ps, aux, |, head]
+[ERR] Comando invalido: top[top, -bn]
+[ERR] Comando invalido: top[top, -bn10]
+[ERR] Comando invalido: top[top, ]
+[ERR] Comando invalido: top[top, -i]
+[ERR] Comando invalido: top[top, -i]
+[ERR] Comando invalido: lsof[lsof, lalalala]
+[ERR] Comando invalido: lsof[lsof, lalalala]
+[ERR] Comando invalido: ps[ps, lalalala]
+[ERR] Comando invalido: ps[ps, ]
+[ERR] Comando invalido: ps[ps,  ]
+[ERR] Comando invalido: ps[ps, aux]

@@ -21,10 +21,10 @@ public class CliControllers {
     public void menuConsola(){
         Scanner scanner = new Scanner (System.in);
         System.out.println("===Lanzador de Procesos (CLI)===\n" +
-                "comandos dsiponibles:\n" +
-                "  top\n" +
-                "  lsof -i \n" +
-                "  ps aux | head \n" 
+                "comandos disponibles:\n" +
+                " top -bn1 \n" +
+                " lsof -i \n" +
+                " pshead (alias de ps aux | head) \n" 
                 );
         String comando = scanner.nextLine();
         if (comando.toUpperCase().startsWith("LSOF")){

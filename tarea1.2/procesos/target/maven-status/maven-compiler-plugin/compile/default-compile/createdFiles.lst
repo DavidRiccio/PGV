@@ -7,3 +7,4 @@ com/comandos/services/impl/LsofServiceImpl.class
 com/comandos/repositories/interfaces/IJobRepository.class
 com/comandos/services/impl/PsHeadServiceImpl.class
 com/comandos/ProcesosServiciosApplication.class
+com/comandos/repositories/file/FileErrorRepository.class

@@ -1,0 +1,3 @@
+[ERR] Comando invalido: df[df]
+[ERR] Comando invalido: df[df, -h]
+[ERR] Comando invalido: dh[dh, -f]

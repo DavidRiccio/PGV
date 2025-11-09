@@ -1,0 +1,17 @@
+Filesystem      Size  Used Avail Use% Mounted on
+none            7.8G     0  7.8G   0% /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2
+none            7.8G  4.0K  7.8G   1% /mnt/wsl
+drivers         624G  482G  142G  78% /usr/lib/wsl/drivers
+/dev/sdd       1007G   16G  940G   2% /
+none            7.8G   80K  7.8G   1% /mnt/wslg
+none            7.8G     0  7.8G   0% /usr/lib/wsl/lib
+rootfs          7.8G  2.7M  7.8G   1% /init
+none            7.8G  508K  7.8G   1% /run
+none            7.8G     0  7.8G   0% /run/lock
+none            7.8G     0  7.8G   0% /run/shm
+none            7.8G   76K  7.8G   1% /mnt/wslg/versions.txt
+none            7.8G   76K  7.8G   1% /mnt/wslg/doc
+C:\             624G  482G  142G  78% /mnt/c
+D:\              15G  574M   14G   4% /mnt/d
+J:\             293G  175G  119G  60% /mnt/j
+tmpfs           1.6G   20K  1.6G   1% /run/user/1000

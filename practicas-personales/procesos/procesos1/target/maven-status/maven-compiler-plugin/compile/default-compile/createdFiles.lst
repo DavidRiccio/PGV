@@ -1,0 +1,8 @@
+com/procesos/facil/repositories/files/FileJobRepository.class
+com/procesos/facil/controllers/CliController.class
+com/procesos/facil/repositories/interfaces/IJobRepository.class
+com/procesos/facil/services/abstracts/CommandoServiceAbstract.class
+com/procesos/facil/DiskMonitorApplication.class
+com/procesos/facil/repositories/files/FileErrorRepository.class
+com/procesos/facil/domain/Job.class
+com/procesos/facil/services/impl/DfServiceImpl.class

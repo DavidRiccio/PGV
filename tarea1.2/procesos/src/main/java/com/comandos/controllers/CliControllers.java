@@ -24,7 +24,7 @@ public class CliControllers {
                 "comandos disponibles:\n" +
                 " top -bn1 \n" +
                 " lsof -i \n" +
-                " pshead (alias de ps aux | head) \n" 
+                " ps head (alias de ps aux | head) \n" 
                 );
         String comando = scanner.nextLine();
         if (comando.toUpperCase().startsWith("LSOF")){

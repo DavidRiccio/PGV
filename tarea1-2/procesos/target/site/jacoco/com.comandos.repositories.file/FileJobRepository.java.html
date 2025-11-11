@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileJobRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">procesos-servicios-consola</a> &gt; <a href="index.source.html" class="el_package">com.comandos.repositories.file</a> &gt; <span class="el_source">FileJobRepository.java</span></div><h1>FileJobRepository.java</h1><pre class="source lang-java linenums">package com.comandos.repositories.file;
+
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
+import com.comandos.repositories.interfaces.IJobRepository;
+
+
+@Repository
+public class FileJobRepository implements IJobRepository {
+    String fileName;
+    static Path path;
+<span class="nc" id="L20">    private static Logger logger = LoggerFactory.getLogger(IJobRepository.class);</span>
+    
+<span class="nc" id="L22">    public FileJobRepository(){</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (fileName==null){</span>
+<span class="nc" id="L24">            fileName = &quot;mis_procesos.txt&quot;;</span>
+        } 
+
+<span class="nc" id="L27">        URL resource = getClass().getClassLoader().getResource(fileName);</span>
+<span class="nc" id="L28">        path = Paths.get(resource.getPath());</span>
+<span class="nc" id="L29">    }</span>
+
+
+    @Override
+    public boolean add(String texto) {
+
+        try {
+<span class="nc" id="L36">            Files.write(path,texto.getBytes(),StandardOpenOption.APPEND);</span>
+<span class="nc" id="L37">        } catch (IOException e) {</span>
+<span class="nc" id="L38">            logger.error(&quot;Ha habido un error al guardar en el fichero&quot;, e);</span>
+<span class="nc" id="L39">        }</span>
+<span class="nc" id="L40">        return false;</span>
+    }
+
+    public void setFileName(String fileName) {
+<span class="nc" id="L44">        this.fileName = fileName;</span>
+<span class="nc" id="L45">    }</span>
+
+
+    @Override
+    public Path getpath() {
+<span class="nc" id="L50">        throw new UnsupportedOperationException(&quot;Unimplemented method 'getpath'&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

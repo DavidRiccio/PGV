@@ -1,0 +1,5 @@
+[ERR] Comando no permitido: ps aux | head
+[ERR] Comando no permitido: ps aux | head
+[ERR] Comando no permitido: ps aux | head
+[ERR] Comando no permitido: ps aux | head
+[ERR] Comando no permitido: ps aux | head

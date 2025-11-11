@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComandoServiceAbstract.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">procesos-servicios-consola</a> &gt; <a href="index.source.html" class="el_package">com.comandos.services.abstracts</a> &gt; <span class="el_source">ComandoServiceAbstract.java</span></div><h1>ComandoServiceAbstract.java</h1><pre class="source lang-java linenums">package com.comandos.services.abstracts;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.comandos.domain.Job;
+import com.comandos.repositories.file.FileErrorRepository;
+import com.comandos.repositories.file.FileJobRepository;
+
+public abstract class ComandoServiceAbstract {
+    private String comando;
+    private Job tipo;
+    private String validation;
+    protected List&lt;String&gt; parametrosValidos;
+    @Autowired
+    public FileErrorRepository errorRepository;
+
+<span class="fc" id="L21">    public ComandoServiceAbstract(String... parametrosValidos) {</span>
+<span class="fc" id="L22">        this.parametrosValidos = Arrays.asList(parametrosValidos);</span>
+<span class="fc" id="L23">    }</span>
+
+    public FileErrorRepository getErrorRepository() {
+<span class="nc" id="L26">        return errorRepository;</span>
+    }
+
+    @Autowired
+    public void setErrorRepository(FileErrorRepository errorRepository) {
+<span class="fc" id="L31">        this.errorRepository = errorRepository;</span>
+<span class="fc" id="L32">    }</span>
+
+    FileJobRepository fileRepository;
+
+    public FileJobRepository getFileRepository() {
+<span class="nc" id="L37">        return fileRepository;</span>
+    }
+
+    @Autowired
+    public void setFileRepository(FileJobRepository fileRepository) {
+<span class="nc" id="L42">        this.fileRepository = fileRepository;</span>
+<span class="nc" id="L43">    }</span>
+
+    public String getComando() {
+<span class="fc" id="L46">        return comando;</span>
+    }
+
+    public void setComando(String comando) {
+<span class="fc" id="L50">        this.comando = comando;</span>
+<span class="fc" id="L51">    }</span>
+
+    public String getValidation() {
+<span class="nc" id="L54">        return validation;</span>
+    }
+
+    public void setValidation(String validation) {
+<span class="fc" id="L58">        this.validation = validation;</span>
+<span class="fc" id="L59">    }</span>
+
+    public Job getTipo() {
+<span class="nc" id="L62">        return tipo;</span>
+    }
+
+    public void setTipo(Job tipo) {
+<span class="fc" id="L66">        this.tipo = tipo;</span>
+<span class="fc" id="L67">    }</span>
+
+    public void procesarLinea(String linea) {
+<span class="fc" id="L70">        String[] arrayComando = linea.split(&quot;\s+&quot;);</span>
+<span class="fc" id="L71">        this.setComando(arrayComando[0]);</span>
+<span class="fc" id="L72">        System.out.println(&quot;[INF] Comando: &quot; + this.getComando());</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (!validar(arrayComando)) {</span>
+<span class="fc" id="L74">            System.out.println(&quot;[ERR] Comando invalido&quot;);</span>
+<span class="fc" id="L75">            return;</span>
+        }
+
+        Process proceso;
+        try {
+<span class="fc" id="L80">            proceso = new ProcessBuilder(&quot;sh&quot;, &quot;-c&quot;, linea + &quot;&gt; mis_procesos.txt&quot;).start();</span>
+<span class="fc" id="L81">            ejecutarProceso(proceso);</span>
+
+<span class="nc" id="L83">        } catch (Exception e) {</span>
+<span class="nc" id="L84">            e.printStackTrace();</span>
+<span class="fc" id="L85">        }</span>
+
+<span class="fc" id="L87">    }</span>
+
+    public boolean ejecutarProceso(Process proceso) {
+        try {
+<span class="nc" id="L91">            proceso.waitFor();</span>
+<span class="nc" id="L92">        } catch (Exception e) {</span>
+<span class="nc" id="L93">            e.printStackTrace();</span>
+<span class="nc" id="L94">        }</span>
+<span class="nc" id="L95">        return true;</span>
+    }
+
+    public String getTipoToString() {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (tipo == null) {</span>
+<span class="nc" id="L100">            return null;</span>
+        }
+<span class="fc" id="L102">        return tipo.toString();</span>
+    }
+
+    public boolean validar(String[] arrayComando) {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (!validarComando()) {</span>
+<span class="fc" id="L107">            errorRepository.addError(&quot;Comando invalido: &quot; + this.getComando() + Arrays.toString(arrayComando));</span>
+<span class="fc" id="L108">            return false;</span>
+        }
+<span class="fc" id="L110">        String parametro = arrayComando[1];</span>
+<span class="fc" id="L111">        Pattern pattern = Pattern.compile(validation);</span>
+<span class="fc" id="L112">        Matcher matcher = pattern.matcher(parametro);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (!matcher.find()) {</span>
+<span class="fc" id="L114">            errorRepository.addError(&quot;Comando invalido: &quot; + this.getComando() + Arrays.toString(arrayComando));</span>
+<span class="fc" id="L115">            return false;</span>
+        }
+<span class="fc" id="L117">        return true;</span>
+    }
+
+    public boolean validarComando() {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (!this.getComando().toUpperCase().equals(getTipoToString())) {</span>
+<span class="fc" id="L122">            return false;</span>
+        }
+<span class="fc" id="L124">        return true;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

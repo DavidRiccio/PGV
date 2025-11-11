@@ -6,7 +6,10 @@ public class SaiyanRace implements Runnable {
     private int distance = 0;
     private static final int GOAL = 100;
     private static volatile boolean winnerDeclared = false;
-
+    /**
+     * Constructor con nombre
+     * @param name Nombre del personaje
+     */
     public SaiyanRace(String name) {
         this.name = name;
     }

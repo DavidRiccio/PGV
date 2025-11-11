@@ -49,9 +49,9 @@ public class CliControllers implements CommandLineRunner {
     }
 
  private void procesarOpcion(String opcion) {
-        System.out.println();  // Línea en blanco
+        System.out.println();  
         
-        switch (opcion.toLowerCase()) {  // ✅ Manejo de todas las opciones
+        switch (opcion.toLowerCase()) {  
             case "top -bn1":
                 topServiceImpl.procesarLinea("top -bn1");
                 break;

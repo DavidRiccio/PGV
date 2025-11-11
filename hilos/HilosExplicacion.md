@@ -45,6 +45,11 @@ final Condition turnoCambio = m.newCondition();
 
 ``awaitUninterruptibly``: Parecido a await pero ignora las interrupciones del hilo.
 
+### Métodos de ``Thread``
+
+``.start``: Inicia la vida de un hilo.
+
+``.join``:
 ## Ejemplos practicos.
 
 

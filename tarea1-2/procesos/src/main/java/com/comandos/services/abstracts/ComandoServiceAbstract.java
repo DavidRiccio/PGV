@@ -80,7 +80,6 @@ public abstract class ComandoServiceAbstract {
             return;
         }
         
-        // Ejecutar el proceso
         ejecutarComando(linea,"stdout.txt");
     }
     private boolean esComandoValido(String comando) {
@@ -90,7 +89,6 @@ public abstract class ComandoServiceAbstract {
             return false;
         }
         
-        // Detectar caracteres peligrosos (defensa adicional)
         String[] caracteresPeligrosos = {"&&", "||", ";", "|", "`", "$", "(", ")"};
         for (String peligroso : caracteresPeligrosos) {
             if (comando.contains(peligroso)) {
@@ -105,14 +103,11 @@ private void ejecutarComando(String comando, String archivoDestino) {
     try {
         System.out.println(">>> Ejecutando: " + comando + " > " + archivoDestino + "\n");
 
-        // El comando con pipe se pasa completo al shell
         String comandoConRedireccion = comando + " > " + archivoDestino;
 
-        // IMPORTANTE: sh -c interpreta el pipe correctamente
         ProcessBuilder pb = new ProcessBuilder("sh", "-c", comandoConRedireccion);
         Process proceso = pb.start();
 
-        // Leer stderr
         byte[] stderrBytes = proceso.getErrorStream().readAllBytes();
         String stderr = new String(stderrBytes);
 

@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.docencia.tareas.model.Tarea;
 
-import jakarta.jws.WebMethod;
-import jakarta.jws.WebParam;
-import jakarta.jws.WebService;
+import jakarta.jws.*;
 
 @WebService(targetNamespace = "http://ies.puerto.es/ws/tarea", name = "TareaPortType")
 public interface ITareaSoapEndpoint {
@@ -57,8 +55,8 @@ public interface ITareaSoapEndpoint {
     /**
      * Elimina una tarea a traves de su id
      * 
-     * @param id
-     * @return
+     * @param id id de la tarea
+     * @return true si lo borra
      */
 
     @WebMethod(operationName = "eliminar")

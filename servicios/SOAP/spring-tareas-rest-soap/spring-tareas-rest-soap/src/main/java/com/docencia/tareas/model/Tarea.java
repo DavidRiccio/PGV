@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import jakarta.xml.bind.annotation.*;
 
-
 @XmlRootElement(name = "tarea")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Tarea {

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.docencia.tareas.model.Tarea;
 import com.docencia.tareas.service.ITareaService;
-import com.docencia.tareas.service.TareaService;
 
 import jakarta.jws.WebService;
 

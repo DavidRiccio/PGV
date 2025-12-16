@@ -1,6 +1,8 @@
 package com.docencia.tareas.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,11 +64,15 @@ public class TareaRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public Map<String, Boolean> eliminar(@PathVariable Long id) {
         boolean ok = tareaService.eliminarTarea(id);
+        Map<String, Boolean> response = new HashMap<>();
         if (!ok) {
-            return ResponseEntity.notFound().build();
+            response.put("deleted", Boolean.FALSE);
+            return response;
+
         }
-        return ResponseEntity.noContent().build();
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
 }

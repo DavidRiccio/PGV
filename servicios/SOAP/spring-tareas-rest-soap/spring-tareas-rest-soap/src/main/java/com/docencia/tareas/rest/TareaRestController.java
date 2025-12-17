@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.docencia.tareas.model.Tarea;
 import com.docencia.tareas.service.TareaService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/tareas")
 public class TareaRestController {

@@ -16,7 +16,7 @@ replay_pid*
 /target/
 /build/
 .gradle/
-out/
+
 
 # Maven wrapper (mantener wrapper, ignorar logs)
 .mvn/wrapper/maven-wrapper.jar

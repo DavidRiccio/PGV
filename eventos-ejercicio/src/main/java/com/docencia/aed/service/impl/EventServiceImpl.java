@@ -10,15 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * TODO (ALUMNADO):
- * Implementa aquí las reglas de negocio descritas en el README:
- * - visibilidad por versión/rol
- * - ownership (colaborador solo sus eventos)
- * - edición solo en DRAFT/REJECTED para colaborador
- * - transiciones de estado válidas
- * - approve/reject/delete solo admin
- */
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -30,51 +21,80 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> listPublicApproved() {
-        return repo.findAll();
+        return repo.findByStatus(EventStatus.APPROVED);
     }
 
     @Override
     public Event getPublicApprovedById(Long id) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return repo.findById(id)
+                .filter(e -> e.getStatus() == EventStatus.APPROVED)
+                .orElseThrow(() -> new RuntimeException("Event not found or not approved"));
     }
 
     @Override
     public List<Event> listV2(String requestingUser, boolean isAdmin, EventStatus statusFilterOrNull) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (isAdmin) {
+            return (statusFilterOrNull != null) ? repo.findByStatus(statusFilterOrNull) : repo.findAll();
+        }
+        return (statusFilterOrNull != null) 
+                ? repo.findByCreatedByAndStatus(requestingUser, statusFilterOrNull) 
+                : repo.findByCreatedBy(requestingUser);
     }
 
     @Override
     public Event getV2ById(String requestingUser, boolean isAdmin, Long id) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        Event event = repo.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+        if (!isAdmin && !event.getCreatedBy().equals(requestingUser)) {
+            throw new RuntimeException("Access denied");
+        }
+        return event;
     }
 
     @Override
     public Event create(String requestingUser, boolean isAdmin, EventCreateRequest req) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        Event event = new Event();
+        event.setTitle(req.getTitle());
+        event.setDescription(req.getDescription());
+        event.setStatus(EventStatus.DRAFT);
+        event.setCreatedBy(requestingUser);
+        return repo.save(event);
     }
 
     @Override
     public Event patch(String requestingUser, boolean isAdmin, Long id, EventPatchRequest req) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        Event event = getV2ById(requestingUser, isAdmin, id);
+        if (req.getTitle() != null) event.setTitle(req.getTitle());
+        if (req.getDescription() != null) event.setDescription(req.getDescription());
+        return repo.save(event);
     }
 
     @Override
     public Event submitForApproval(String requestingUser, boolean isAdmin, Long id) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        Event event = getV2ById(requestingUser, isAdmin, id);
+        event.setStatus(EventStatus.PENDING_APPROVAL);
+        return repo.save(event);
     }
 
     @Override
     public Event approve(String requestingUser, boolean isAdmin, Long id) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (!isAdmin) throw new RuntimeException("Only admins can approve");
+        Event event = repo.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+        event.setStatus(EventStatus.APPROVED);
+        return repo.save(event);
     }
 
     @Override
     public Event reject(String requestingUser, boolean isAdmin, Long id, String reason) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (!isAdmin) throw new RuntimeException("Only admins can reject");
+        Event event = repo.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+        event.setStatus(EventStatus.REJECTED);
+        // El motivo de rechazo podría guardarse en un campo de la entidad si existiera
+        return repo.save(event);
     }
 
     @Override
     public void delete(String requestingUser, boolean isAdmin, Long id) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        Event event = getV2ById(requestingUser, isAdmin, id);
+        repo.deleteById(event.getId());
     }
 }

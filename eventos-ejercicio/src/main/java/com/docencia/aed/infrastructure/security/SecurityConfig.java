@@ -3,8 +3,8 @@ package com.docencia.aed.infrastructure.security;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,32 +48,30 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http,
-            AppSecurityProperties props,
-            JwtAuthenticationFilter jwtFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtFilter)
+            throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // 1. Endpoints Públicos
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/api/v1/events/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/h2-console/**")
+                        .permitAll()
 
-        http.csrf(csrf -> csrf.disable());
-        http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .requestMatchers("/api/v2/events/*/submit").hasRole("ADMIN")
+                        .requestMatchers("/api/v2/events/*/approve").hasRole("ADMIN")
+                        .requestMatchers("/api/v2/events/*/reject").hasRole("ADMIN")
 
-        // Rutas públicas/protegidas vienen de configuración externalizada
-        http.authorizeHttpRequests(auth -> {
-            for (String p : props.getRoutes().getPublic()) {
-                auth.requestMatchers(p).permitAll();
-            }
-            for (String p : props.getRoutes().getProtected()) {
-                auth.requestMatchers(p).authenticated();
-            }
+                        .anyRequest().authenticated())
+                .httpBasic(httpBasic -> httpBasic.disable());
 
-            // Por defecto: denegar el resto (para que el alumnado sea explícito)
-            auth.anyRequest().denyAll();
-        });
-
-        // Añadimos el filtro JWT
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // Basic deshabilitado (opcional)
-        http.httpBasic(Customizer.withDefaults());
-
         return http.build();
     }
 }

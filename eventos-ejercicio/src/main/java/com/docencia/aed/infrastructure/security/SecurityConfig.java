@@ -63,11 +63,10 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/h2-console/**")
                         .permitAll()
-
-                        .requestMatchers("/api/v2/events/*/submit").hasRole("ADMIN")
-                        .requestMatchers("/api/v2/events/*/approve").hasRole("ADMIN")
-                        .requestMatchers("/api/v2/events/*/reject").hasRole("ADMIN")
-
+                        .requestMatchers("/api/v2/events/**").hasAnyRole("ADMIN","COLLABORATOR")
+                        .requestMatchers(HttpMethod.DELETE,"/api/v2/events/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v2/events/approve").hasRole("ADMIN")
+                        .requestMatchers("/api/v2/events/reject").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.disable());
 
